@@ -1,0 +1,33 @@
+﻿@model Hospital_Manager.ViewModels.Patient.PatientDetailsViewModel
+
+@{
+    ViewData["Title"] = "Детайли за пациент";
+}
+
+<h1>Детайли за пациент</h1>
+
+<div>
+    <h4>Пациент</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Име</dt>
+        <dd class="col-sm-10">@Model.FirstName</dd>
+
+        <dt class="col-sm-2">Фамилия</dt>
+        <dd class="col-sm-10">@Model.LastName</dd>
+
+        <dt class="col-sm-2">Имейл</dt>
+        <dd class="col-sm-10">@Model.Email</dd>
+
+        <dt class="col-sm-2">Телефонен номер</dt>
+        <dd class="col-sm-10">@Model.PhoneNumber</dd>
+
+        <dt class="col-sm-2">Лекари</dt>
+        <dd class="col-sm-10">@Model.DoctorName</dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Редактирай</a> |
+    <a asp-action="Index">Назад към списъка</a>
+</div>

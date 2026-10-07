@@ -37,6 +37,6 @@ namespace Data_Hospital_Manager.Entities
 
         public Hospital Hospital { get; set; }
 
-        public List<DoctorPatient> DPatients { get; set; } = new List<DoctorPatient>();
+        public ICollection<DoctorPatient> DPatients { get; set; } = new List<DoctorPatient>();
     }
 }

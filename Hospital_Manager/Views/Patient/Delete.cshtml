@@ -1,0 +1,35 @@
+﻿@model Hospital_Manager.ViewModels.Patient.PatientDetailsViewModel
+
+@{
+    ViewData["Title"] = "Изтрий пациент";
+}
+
+<h1>Изтриване на пациент</h1>
+
+<h3>Сигурни ли сте, че искате да изтриете този пациент?</h3>
+<div>
+    <h4>Пациент</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Име</dt>
+        <dd class="col-sm-10">@Model.FirstName</dd>
+
+        <dt class="col-sm-2">Фамилия</dt>
+        <dd class="col-sm-10">@Model.LastName</dd>
+
+        <dt class="col-sm-2">Имейл</dt>
+        <dd class="col-sm-10">@Model.Email</dd>
+
+        <dt class="col-sm-2">Телефонен номер</dt>
+        <dd class="col-sm-10">@Model.PhoneNumber</dd>
+
+        <dt class="col-sm-2">Лекари</dt>
+        <dd class="col-sm-10">@Model.DoctorName</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Изтрий" /> |
+        <a asp-action="Index">Назад към списъка</a>
+    </form>
+</div>

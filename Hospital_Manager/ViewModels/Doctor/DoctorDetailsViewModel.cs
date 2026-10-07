@@ -15,5 +15,7 @@
         public string PhoneNumber { get; set; }
 
         public string HospitalName { get; set; }
+        public List<string> Patients { get; set; }=new List<string>();
+
     }
 }
