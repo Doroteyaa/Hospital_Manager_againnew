@@ -18,6 +18,6 @@ namespace Hospital_Manager.ViewModels.Patient
         [Phone(ErrorMessage = "Моля, въведете валиден телефонен номер.")]
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Моля, въведете лекар.")]
-        public List<int> DoctorIds { get; set; }
+        public List<int> DoctorIds { get; set; } = new List<int>();
     }
 }

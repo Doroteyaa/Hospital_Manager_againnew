@@ -1,7 +1,7 @@
-﻿@model Hospital_Manager.ViewModels.Patient.PatientDetailsViewModel
+﻿@model Hospital_Manager.ViewModels.Patient.PatientDeleteViewModel
 
 @{
-    ViewData["Title"] = "Изтрий пациент";
+    ViewData["Title"] = "Delete";
 }
 
 <h1>Изтриване на пациент</h1>
@@ -16,20 +16,21 @@
 
         <dt class="col-sm-2">Фамилия</dt>
         <dd class="col-sm-10">@Model.LastName</dd>
-
-        <dt class="col-sm-2">Имейл</dt>
-        <dd class="col-sm-10">@Model.Email</dd>
-
-        <dt class="col-sm-2">Телефонен номер</dt>
-        <dd class="col-sm-10">@Model.PhoneNumber</dd>
-
-        <dt class="col-sm-2">Лекари</dt>
-        <dd class="col-sm-10">@Model.DoctorName</dd>
     </dl>
 
     <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Изтрий" /> |
-        <a asp-action="Index">Назад към списъка</a>
+        <input type="submit"
+               value="Delete"
+               class="btn btn-danger" />
+        |
+        <a asp-action="Index">
+            Back to List
+        </a>
     </form>
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

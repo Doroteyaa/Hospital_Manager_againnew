@@ -1,8 +1,10 @@
 ﻿using Data_Hospital_Manager;
 using Data_Hospital_Manager.Entities;
+using Hospital_Manager.Core.Interfaces;
+using Hospital_Manager.Core.Services;
+using Hospital_Manager.ViewModels.Hospital;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Hospital_Manager.ViewModels.Hospital;
 
 namespace Hospital_Manager.Controllers
 {
@@ -10,20 +12,16 @@ namespace Hospital_Manager.Controllers
     public class HospitalController : Controller
     {
 
-        private readonly HospitalDbContext context;
+        private readonly IHospitalService hs;
 
-        public HospitalController(HospitalDbContext context)
+        public HospitalController(IHospitalService hospitalService)
         {
-            this.context = context;
+            hs = hospitalService;
         }
-
-        
-            
+      
         public async Task<IActionResult> Index()
         {
-            var hospitals = await context.Hospitals//болница БД
-                .Where(h => !h.IsDeleted)//Вземи само болниците, при които IsDeleted е false
-                .ToListAsync();
+            var hospitals = await hs.GetAllHospitalsAsync();
 
             var model = new List<HospitalIndexViewModel>();//празен списък за ViewModel-ите
 
@@ -46,7 +44,7 @@ namespace Hospital_Manager.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var hospital = await context.Hospitals.FindAsync(id);
+            var hospital = await hs.GetHospitalByIdAsync(id);
 
             if (hospital == null)
             {
@@ -88,9 +86,7 @@ namespace Hospital_Manager.Controllers
                     IsDeleted = false
                 };
 
-                context.Hospitals.Add(hospital);
-                await context.SaveChangesAsync();
-
+                hs.AddHospitalAsync(hospital);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -99,7 +95,7 @@ namespace Hospital_Manager.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var hospital = await context.Hospitals.FindAsync(id);
+            var hospital = await hs.GetHospitalByIdAsync(id);
 
             if (hospital == null)
             {
@@ -129,7 +125,7 @@ namespace Hospital_Manager.Controllers
 
             if (ModelState.IsValid)
             {
-                var hospital = await context.Hospitals.FindAsync(id);
+                var hospital = await hs.GetHospitalByIdAsync(id);
 
                 if (hospital == null)
                 {
@@ -141,9 +137,7 @@ namespace Hospital_Manager.Controllers
                 hospital.Email = model.Email;
                 hospital.PhoneNumber = model.PhoneNumber;
                 hospital.BedsCount = model.BedsCount;
-
-                await context.SaveChangesAsync();
-
+                await hs.UpdateHospitalAsync(hospital);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -152,7 +146,7 @@ namespace Hospital_Manager.Controllers
 
         public async Task<IActionResult> Delete(int id)//Сигурни ли сте, че искате да изтриете тази болница?
         {
-            var hospital = await context.Hospitals.FindAsync(id);
+            var hospital = await hs.GetHospitalByIdAsync(id);
 
             if (hospital == null)
             {
@@ -172,15 +166,7 @@ namespace Hospital_Manager.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hospital = await context.Hospitals.FindAsync(id);
-
-            if (hospital != null)
-            {
-                hospital.IsDeleted = true;
-
-                await context.SaveChangesAsync();
-            }
-
+             await hs.DeleteHospitalAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

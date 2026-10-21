@@ -10,10 +10,10 @@ namespace Hospital_Manager.Core.Interfaces
     public interface IHospitalService
     {
         Task<List<Hospital>> GetAllHospitalsAsync();
-        Task<Hospital?> GetAllHospitalByIdAsync(int id);
-        Task  AddHospitalAsync(Hospital hospital);
-        Task  DeleteHospitalAsync(int id);
-        Task  UpdateHospitalAsync(Hospital hospital);
+        Task<Hospital?> GetHospitalByIdAsync(int id);
+        Task AddHospitalAsync(Hospital hospital);
+        Task DeleteHospitalAsync(int id);
+        Task UpdateHospitalAsync(Hospital hospital);
      
 
     }
