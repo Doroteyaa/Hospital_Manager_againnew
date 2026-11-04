@@ -40,7 +40,7 @@ namespace Hospital_Manager.Controllers
                 });
             }
 
-            return View(model);//Изпращаме списъка към View
+            return View(model);
         }
         
 
